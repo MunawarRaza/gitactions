@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - stage
-      - quality
+      - main
       - production
   
 jobs:
