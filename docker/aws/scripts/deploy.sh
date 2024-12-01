@@ -6,7 +6,7 @@ docker pull 590183784162.dkr.ecr.us-east-1.amazonaws.com/main_ai_chat_luminous:l
 docker container rm -f main_ai_chat_luminous || true
 docker run -dt \
 	  --name main_ai_chat_luminous \
-	  -p 8080:80 
+	  -p 8080:80 \
 	   590183784162.dkr.ecr.us-east-1.amazonaws.com/main_ai_chat_luminous:latest
 docker rmi $(docker images -f "dangling=true" -q)
 
