@@ -5,4 +5,8 @@ hooks:
     - location: ./docker/aws/scripts/deploy.sh
       timeout: 300
       runas: root
-
+branch_config:
+    main:
+        deploymentGroupName: demo
+        deploymentGroupConfig:
+            serviceRoleArn: arn:aws:iam::590183784162:role/codedeployrole
