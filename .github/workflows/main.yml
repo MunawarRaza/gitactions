@@ -72,3 +72,31 @@ jobs:
           docker build -f docker/aws/chat/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image-chat=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    # Step 4: Create AppSpec File for CodeDeploy
+      - name: Create AppSpec File
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ vars.ENVIRONMENT }}_ai_chat_luminous
+          IMAGE_TAG: ${{ vars.ENVIRONMENT }}
+        run: |
+          echo "
+            version: 0.0
+            Resources:
+            - my-container:
+              Type: AWS::ECS::Service
+              Properties:
+                TaskDefinition: ${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG
+                ContainerName: my-app" > appspec.yml
+
+      # Step 5: Deploy with AWS CodeDeploy
+      - name: Deploy to EC2
+        uses: aws-actions/aws-code-deploy@v1
+        with:
+          application-name: ${{ vars.CODEDEPLOY_APPLICATION_NAME }}
+          deployment-group-name: ${{ vars.CODEDEPLOY_DEPLOYMENT_GROUP }}
+          deployment-application-type: ECS
+          bundle-type: YAML
+          deployment-package: appspec.yml
+        env:
+          AWS_REGION: ${{ vars.AWS_DEFAULT_REGION }}
