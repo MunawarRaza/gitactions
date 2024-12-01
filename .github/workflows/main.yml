@@ -5,7 +5,7 @@ on:
       - stage
       - quality
       - production
-    
+  
 jobs:
   get-environment:
     name: Get environment
