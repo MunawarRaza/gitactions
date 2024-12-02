@@ -96,7 +96,7 @@ jobs:
       - name: Deploy with CodeDeploy
         env:
           ENVIRONMENT: ${{ vars.ENVIRONMENT }}
-          PORT_AI_CHAT: ${{ secrets.PORT_AI_CHAT }}
+          PORT_AI_CHAT: ${{ vars.PORT_AI_CHAT }}
         run: |
           aws deploy create-deployment \
             --application-name demo \
