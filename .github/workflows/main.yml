@@ -102,7 +102,7 @@ jobs:
           aws deploy create-deployment \
             --application-name demo \
             --deployment-group-name demo \
-            --s3-location bucket=demo-bucket-codedeploy,deploy.zip,bundleType=zip \
+            --s3-location bucket=demo-bucket-codedeploy,key=deploy.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE
           
     # # Step 4: Create AppSpec File for CodeDeploy
