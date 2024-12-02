@@ -85,14 +85,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 # # Working code start #
-      # - name : Create Code Deploy
-      #   env:
-      #     ENVIRONMENT: ${{ vars.ENVIRONMENT }}
-      #     PORT_AI_CHAT: ${{ vars.PORT_AI_CHAT }}
-      #   id: deploy
-      #   uses: webfactory/create-aws-codedeploy-deployment@v0.2.2
-      #   with:
-      #         application: demo
+      - name : Create Code Deploy
+        env:
+          ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+          PORT_AI_CHAT: ${{ vars.PORT_AI_CHAT }}
+        id: deploy
+        uses: webfactory/create-aws-codedeploy-deployment@v0.2.2
+        with:
+              application: demo
 #       - name : Print Commit Message
 #         uses: peter-evans/commit-comment@v2
 #         with:
@@ -102,16 +102,16 @@ jobs:
 #             @${{ github.actor }} this was deployed as [${{ steps.deploy.outputs.deploymentId }}](https://console.aws.amazon.com/codesuite/codedeploy/deployments/${{ steps.deploy.outputs.deploymentId }}?region=us-east-1) to group `${{ steps.deploy.outputs.deploymentGroupName }}`.
 # Working code End #
 
-      - name: Deploy with CodeDeploy
-        env:
-          ENVIRONMENT: ${{ vars.ENVIRONMENT }}
-          PORT_AI_CHAT: ${{ vars.PORT_AI_CHAT }}
-        run: |
-          aws deploy create-deployment \
-            --application-name demo \
-            --deployment-group-name demo \
-            --s3-location bucket=demo-bucket-codedeploy,key=deploy.zip,bundleType=zip \
-            --file-exists-behavior OVERWRITE
+      # - name: Deploy with CodeDeploy
+      #   env:
+      #     ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+      #     PORT_AI_CHAT: ${{ vars.PORT_AI_CHAT }}
+      #   run: |
+      #     aws deploy create-deployment \
+      #       --application-name demo \
+      #       --deployment-group-name demo \
+      #       --s3-location bucket=demo-bucket-codedeploy,key=deploy.zip,bundleType=zip \
+      #       --file-exists-behavior OVERWRITE
           
     # # Step 4: Create AppSpec File for CodeDeploy
     #   - name: Create AppSpec File
