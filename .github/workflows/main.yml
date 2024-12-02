@@ -5,6 +5,7 @@ on:
       - stage
       - main
       - production
+      
 jobs:
   get-environment:
     name: Get environment
