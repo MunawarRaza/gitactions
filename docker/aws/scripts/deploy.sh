@@ -11,3 +11,5 @@ docker run -dt \
 	   590183784162.dkr.ecr.us-east-1.amazonaws.com/main_ai_chat_luminous:main
 docker rmi $(docker images -f "dangling=true" -q)
 
+echo '# deployment finished #'
+
